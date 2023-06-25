@@ -1,6 +1,7 @@
 package com.example.superheroes
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -25,65 +26,57 @@ import com.example.superheroes.ui.theme.Shapes
 import com.example.superheroes.ui.theme.SuperheroesTheme
 import com.example.superheroes.ui.theme.Typography
 
-class HeroesScreen {
+@Composable
+fun HeroesCard(
+    displayText: String = "Lorem",
+    bodyText: String = "Lorem",
+    imageRes: Int = R.drawable.android_superhero1
 
-
-    @Composable
-    fun HeroesCard(displayText: String = "Lorem",
-                   bodyText: String = "Lorem",
-                   imageRes: Int = R.drawable.android_superhero1
+) {
+    Card(
+        Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp), shape = Shapes.medium
 
     ) {
-        Card(
-            Modifier
-                .fillMaxWidth()
-                , shape = Shapes.medium
+        Row(Modifier.padding(16.dp)) {
+            Column(Modifier.weight(1f)) {
+                Text(text = displayText, style = Typography.displaySmall)
+                Text(text = bodyText, style = Typography.bodyLarge)
 
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Image(
+                modifier = Modifier.size(72.dp),
+                painter = painterResource(id = imageRes),
+                contentDescription = displayText
+            )
+        }
+    }
+
+}
+
+@Composable
+fun HeroesList(paddingValues: PaddingValues) {
+    SuperheroesTheme() {
+        LazyColumn(
+            Modifier.fillMaxWidth(),
+            contentPadding = paddingValues,
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Row(Modifier.padding(16.dp)) {
-                Column(Modifier.weight(1f)) {
-                    Text(text = displayText, style = Typography.displaySmall)
-                    Text(text = bodyText, style = Typography.bodyLarge)
-
-                }
-                Spacer(modifier = Modifier.width(16.dp))
-                Image(
-                    modifier = Modifier.size(72.dp),
-                    painter = painterResource(id = imageRes),
-                    contentDescription = displayText
-                )
-            }
-        }
-
-    }
-
-    @Composable
-    fun HeroesList(modifier: Modifier) {
-        SuperheroesTheme() {
-            LazyColumn(
-                Modifier.fillMaxSize(),
-                contentPadding =
-                PaddingValues(
-                    top = 8.dp,
-                    bottom = 8.dp,
-                    start = 16.dp,
-                    end = 16.dp
-                )
-            ) {
-                HeroesRepository.heroes.forEach {
-                    item {
-                        HeroesCard(
-                            displayText = stringResource(id = it.nameRes),
-                            bodyText =
-                            stringResource(
-                                id = it.descriptionRes
-                            ), imageRes = it.imageRes
-                        )
-                        Spacer(modifier = Modifier.size(8.dp))
-                    }
+            HeroesRepository.heroes.forEach {
+                item {
+                    HeroesCard(
+                        displayText = stringResource(id = it.nameRes),
+                        bodyText =
+                        stringResource(
+                            id = it.descriptionRes
+                        ), imageRes = it.imageRes
+                    )
+                    Spacer(modifier = Modifier.size(8.dp))
                 }
             }
         }
-
     }
+
 }

@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.superheroes.ui.theme.SuperheroesTheme
 import com.example.superheroes.ui.theme.Typography
-import com.example.superheroes.HeroesScreen
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +29,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    //Greeting("Android")
+                    HeroesApp()
                 }
             }
         }
@@ -44,6 +45,7 @@ fun HeroesTopAppBar() {
         }
     )
 }
+@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HeroesApp() {
@@ -53,24 +55,9 @@ fun HeroesApp() {
             HeroesTopAppBar()
         }
     ){
-        Greeting(name = "lorem", Modifier.padding(it))
+        HeroesList(it)
     }
 
 
 
-}
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SuperheroesTheme {
-        Greeting("Android")
-    }
 }
